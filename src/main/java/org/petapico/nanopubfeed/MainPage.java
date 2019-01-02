@@ -27,9 +27,22 @@ public class MainPage extends Page {
 			getResp().sendError(400, "Invalid request: " + getReq().getFullRequest());
 			return;
 		}
-		printHtmlHeader("Nanopub Feed");
-		println("<h1>Nanopub Feed</h1>");
-		printHtmlFooter();
+		if ("application/json".equals(format)) {
+			// TODO
+		} else {
+			printHtmlHeader("Nanopub Feed");
+			println("<h1>Nanopub Feed</h1>");
+			println("<ul>");
+			try {
+				for (String u : Utils.getSigningUsers()) {
+					println("<li>" + u + "</li>");
+				}
+			} catch (IOException ex) {
+				println("<li>ERROR</li>");
+			}
+			println("</ul>");
+			printHtmlFooter();
+		}
 		getResp().setContentType(format);
 	}
 
